@@ -14,7 +14,10 @@ class Nondeterministic_Finite_State_Machine:
                 print(split_line)
                 if split_line[0].startswith('START'):
                     self.start_state = split_line[1]
-                    self.accept_states = split_line[3].split(',')
+                    if "," in split_line[3]:
+                        self.accept_states = split_line[3].split(',')
+                    else:
+                        self.accept_states = split_line[3]
                 if split_line[0].startswith('q'):
                     state = split_line[0]
                     if len(split_line) == 3:
