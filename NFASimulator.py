@@ -1,7 +1,12 @@
 import sys
 import re
-
     
+def copy_input_to_file():
+    filename = input("Please enter a file name ending in .txt: ")
+    with open(filename, "w") as file:
+        file.write(input ("Please write a definition for a NFA: "))
+    
+
 class Nondeterministic_Finite_State_Machine:
     def __init__(self):
         self.transitions = {}
@@ -66,12 +71,6 @@ class Nondeterministic_Finite_State_Machine:
         return False
 
 
-
-c = Nondeterministic_Finite_State_Machine()
-print(c.accepts(sys.argv[2]))
-#print(c.accepts("a", c.start_state))		#TRUE
-#print(c.accepts("aaaaa", c.start_state))	#TRUE
-#print(c.accepts("b", c.start_state))		#FALSE
-#print(c.accepts("_", c.start_state))		#TRUE
-#print(c.accepts("__", c.start_state)) 		#FALSE
-#print(c.accepts("aaaaaaaaaaaaaaa", c.start_state))	#TRUE
+copy_input_to_file()
+#machine = Nondeterministic_Finite_State_Machine()
+#print(machine.accepts(sys.argv[2]))
