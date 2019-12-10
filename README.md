@@ -2,4 +2,9 @@
 
 This repo is for Joe Maiocco's NFA simulator, implemented in Python.
 
-Lambdas are represented as the underscore "\_" character in input strings.
+Note: Lambdas are represented as the underscore "\_" character in input strings.
+
+##Command Line Version
+
+
+##Non-Command Line Version w/ Test Suite
