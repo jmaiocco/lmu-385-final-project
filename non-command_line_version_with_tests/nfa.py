@@ -7,7 +7,6 @@ class Nondeterministic_Finite_State_Machine:
             for line in machine_description:
                 split_line = re.split(r'[=:;\->\n]+', line)
                 split_line = list(filter(None, split_line))
-                print(split_line)
                 if split_line[0].startswith('START'):
                     self.start_state = split_line[1]
                     if "," in split_line[3]:
@@ -41,14 +40,15 @@ class Nondeterministic_Finite_State_Machine:
         if len(input_string) == 0 and state in self.accept_states:
             return True
         possible_moves = {}
-        symbol = input_string[:1]
-        next_possible_states = self.return_possible_transition(symbol, state)
+        consumed_symbol = input_string[:1]
+        next_possible_states = self.return_possible_transition(consumed_symbol, state)
         if not next_possible_states:
             return False
+        remaining_string = input_string[1:]
         for new_state in next_possible_states:
-            possible_moves[new_state] = self.accepts(input_string[1:], new_state)
+            possible_moves[new_state] = self.accepts(remaining_string, new_state)
         if True in possible_moves.values():
             correct_paths = [state for state, success in possible_moves.items() if success is True]
             for next_state in correct_paths:
-                return self.accepts(input_string[1:], next_state)
+                return self.accepts(remaining_string, next_state)
         return False
