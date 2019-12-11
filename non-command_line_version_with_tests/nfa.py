@@ -1,8 +1,12 @@
+"""A Python module defining a simulated NFA."""
+
 import re
 
 class Nondeterministic_Finite_State_Machine:
+    """A class defining an implementation of a NFA."""
     def __init__(self, given_file):
         self.transitions = {}
+        """Creates simulated machine from given file."""
         with open(given_file, 'r') as machine_description:
             for line in machine_description:
                 split_line = re.split(r'[=:;\->\n]+', line)
@@ -30,6 +34,7 @@ class Nondeterministic_Finite_State_Machine:
 
 
     def return_possible_transition(self, symbol, current_state):
+        """Returns the set of possible transitions from the current state."""
         try:
             possible_transitions = self.transitions[current_state][symbol]
             return possible_transitions
@@ -37,6 +42,7 @@ class Nondeterministic_Finite_State_Machine:
             return []
 
     def accepts(self, input_string, state="q0"):
+        """Returns whether or not the input string is accepted by the NFA."""
         if len(input_string) == 0 and state in self.accept_states:
             return True
         possible_moves = {}
