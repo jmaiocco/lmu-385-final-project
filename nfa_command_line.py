@@ -1,10 +1,13 @@
+"""A Python module defining a simulated NFA, with command line functionality."""
+
 import sys
 import re
 
 def copy_input_to_file():
+    """Writes user input from STDIN to a file for later use."""
     filename = input("Please enter a file name ending in .txt: ")
     with open(filename, "w") as file:
-        received_input = input("Please write a definition for a NFA, separating new lines with the | symbol: ")
+        received_input = input("Please write a NFA description, separating new lines with the | symbol: ")
         list_of_lines = received_input.split("|")
         for line in list_of_lines:
             file.write(line + "\n")
@@ -12,6 +15,7 @@ def copy_input_to_file():
 
 
 def take_input_or_test_machine(command_line_arg_count):
+    """Asks user for input file or checks if given string is accepted."""
     if command_line_arg_count == 1:
         copy_input_to_file()
     elif command_line_arg_count == 2:
@@ -21,15 +25,18 @@ def take_input_or_test_machine(command_line_arg_count):
         print("\nPlease make sure you are using the correct number of command line arguments.")
 
 def check_if_in_language(nfa):
+    """Prints out whether or not the given string is accepted by the NFA."""
     if nfa.accepts(sys.argv[1]):
         print("\nTRUE: That string is accepted by the given NFA.")
     else:
         print("\nFALSE: That string is NOT accepted by the given NFA.")
 
 class NondeterministicFiniteStateMachine:
+    """A class defining an implementation of a NFA."""
     def __init__(self):
         self.transitions = {}
         file = sys.stdin
+        """Creates simulated machine from given file."""
         for line in file:
             split_line = re.split(r'[=:;\->\n]+', line)
             split_line = list(filter(None, split_line))
@@ -56,6 +63,7 @@ class NondeterministicFiniteStateMachine:
 
 
     def return_possible_transition(self, symbol, current_state):
+        """Returns the set of possible transitions from the current state."""
         try:
             possible_transitions = self.transitions[current_state][symbol]
             return possible_transitions
@@ -63,6 +71,7 @@ class NondeterministicFiniteStateMachine:
             return []
 
     def accepts(self, input_string, state="q0"):
+        """Returns whether or not the input string is accepted by the NFA."""
         if len(input_string) == 0 and state in self.accept_states:
             return True
         possible_moves = {}
